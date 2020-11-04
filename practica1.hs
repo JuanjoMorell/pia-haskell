@@ -16,8 +16,11 @@ maximo'(x,y)
     | otherwise = x
 
 maximoc, maximoc' :: Integer -> Integer -> Integer
+maximoc x y = if x >= y then x else y
 
-
+maximoc' x y
+    | x<y = y
+    | otherwise = x
 
 ----------------------------------------------------
 -----------------------------------------EJERCICIO 2 
