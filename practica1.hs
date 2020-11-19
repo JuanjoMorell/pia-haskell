@@ -95,3 +95,57 @@ xor' True x = not x
 -----------------------------------------EJERCICIO 8 
 ----------------------------------------------------
 
+minimo :: Integer -> Integer -> Integer
+minimo x y = if x < y then x else y
+
+minimoTres :: Integer -> Integer -> Integer -> Integer
+minimoTres x y z = if t < z then t else z
+    where t = minimo x y
+
+----------------------------------------------------
+-----------------------------------------EJERCICIO 9
+----------------------------------------------------
+
+maxTres, maxTres' :: Integer -> Integer -> Integer -> Integer
+maxTres x y z
+    | x >= y && x <= z = x
+    | y >= z = y
+    | otherwise = z
+
+maxTres' x y z = max (max x y) z
+
+----------------------------------------------------
+----------------------------------------EJERCICIO 10
+----------------------------------------------------
+
+entre :: Integer -> Integer -> Integer -> Bool
+entre x y z = (x <= y && y <= z) || (z<=y && y <= x)
+
+numeroCentral :: Integer -> Integer -> Integer -> Integer
+numeroCentral x y z
+    | entre y x z = x
+    | entre x y z = y
+    | otherwise = z
+
+----------------------------------------------------
+----------------------------------------EJERCICIO 11
+----------------------------------------------------
+
+productoRango :: Integer -> Integer -> Integer
+productoRango n m
+    | m > n = 0
+    | m == n = m
+    | otherwise = m * productoRango (m+1) n
+
+fact :: Integer -> Integer
+fact 0 = 1
+fact n = productoRango 1 n
+
+----------------------------------------------------
+----------------------------------------EJERCICIO 12
+----------------------------------------------------
+
+prod :: Integer -> Integer -> Integer
+prod x y
+    | x == 0 || y == 0 = 0
+    | otherwise = x + prod x (y-1)
