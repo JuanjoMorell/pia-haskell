@@ -44,6 +44,8 @@ last (x:xs) = if null xs then x else last xs
 init (x:xs) = if null xs then [] else x : init xs
 
 -- EJERCICIO: Reescribir las funciones last e init como composición de head, tail y/o reverse:
+last_ = head.reverse
+init_ = reverse.tail.reverse
 
 -----------------------------------------------------------------------------------------
 
@@ -67,13 +69,24 @@ filter p [] = []
 filter p (x:xs)=if p x then x:filter p xs else filter p xs
 
 -- EJERCICIO: Definir una función sum que suma los elementos de una lista:
+sum :: Num a => [a] -> a
+sum [] = 0
+sum (x:xs) = x + sum xs
 
 --------------------------------------------------------------------------------- 
 -- EJERCICIO: Definir una función listInt que cree una lista de enteros [n..m] tomando como entrada m n:
+-- Integral contiene las clases Int e Integer
+listInt :: Integral a => a -> a -> [a]
+listInt n m
+    | n > m = []
+    | otherwise = n:listInt (n+1) m
 
 -------------------------------------------------------------------------------
 -- EJERCICIO: Escribir en la terminal una expresión que calcule la suma de los cuadrados de los números enteros entre 1 y 100:
+-- SOLUCION: sum(map cuadrado(listInt 1 100))
+
 -- EJERCICIO: Escribir en la terminal una expresión que calcule la suma de los cuadrados de los números pares entre 1 y 10:
+-- SOLUCION: (sum.map cuadrado.filter even) (listInt 1 10)
 -------------------------------------------------------------------------------------------------
 
 zip  :: [a] -> [b] -> [(a,b)]
@@ -84,12 +97,20 @@ unzip  :: [(a,b)] -> ([a],[b])
 unzip xs = (map fst xs, map snd xs)
 
 -- EJERCICIO: Definir una función que calcule el producto escalar de dos vectores xs e ys:
+pe :: (Num a) => [a] -> [a] -> a
+pe xs ys = (sum.map mult) (zip xs ys) where mult (a,b) = a * b
 
 ------------------------------------------------------------------------------------
 -- EJERCICIO: Definir la función and que haga el && de una lista de booleanos:
+and :: [Bool] -> Bool
+and [] = True
+and (x:xs) = x && and xs
 
 ---------------------------------------------------------------------------------------
 --EJERCICIO: Definir una función nodec para determinar si una secuencia [x_0,...,x_{n-1}] es no decreciente:
+nodec :: Ord a => [a] -> Bool
+nodec xs = and(map me (zip xs (tail xs)))
+    where me (a,b) = a <= b
 
 ----------------------------------------------------------------------------------------------
 
@@ -105,6 +126,13 @@ concat_ = foldr (++) []
 reverse_ :: [a] -> [a]
 reverse_ = foldr snoc []
             where snoc x xs = xs ++ [x]
+
+-- reverse_ [1,2,3] = foldr snoc[] [1,2,3]=snoc 1 (foldr snoc [] [2,3]) = snoc 1 (snoc 2 (foldr snoc [] [3])) =
+    -- snoc 1 (snoc 2 (snoc 3 (foldr snoc [] []))) = snoc 1 (snoc 2(snoc 3 [])) = snoc 1(snoc 2 [3]) =
+        -- snoc 1 [3,2] = [3,2,1]
+
+reverse_' [1,2,3] = foldl cons [] [1,2,3] = foldl cons (cons [] 1) [2,3] = foldl cons [1] [2,3] = foldl cons (cons [1] 2) [3] = 
+    foldl cons[2,1][3] = foldl cons (cons [2,1] 3)[] = foldl cons [3,2,1] [] = [3,2,1]
 
 length_ :: [a] -> Int
 length_ = foldr increm 0
