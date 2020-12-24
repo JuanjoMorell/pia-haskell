@@ -68,11 +68,101 @@ segundoGrado (a,b,c)
 
 
 -- EJERCICIO 9
-const :: a -> b -> a
-subst :: (a -> b -> c) -> (a -> b) -> a -> c
-aplicar :: (a -> b) -> a -> b
-flip :: (a -> b -> c) -> b -> a -> c
+--const :: a -> b -> a
+--subst :: (a -> b -> c) -> (a -> b) -> a -> c
+--aplicar :: (a -> b) -> a -> b
+--flip :: (a -> b -> c) -> b -> a -> c
 
+-- EJERCICIO 10
+-- flip(curry f) x y = curry(f. swap) x y
+-- (curry f) y x       (f. swap)(x,y)
+-- f (y,x)              f ( swap (x,y))
+swap :: (Integer,Integer) -> (Integer,Integer)
+swap (x,y) = (y,x)
 
+-- EJERCICIO 11
+-- g :: a -> b
+-- rara :: ((a -> b) -> a) -> (a -> b) -> b
+-- masrara no se puede definir
+
+-- EJERCICIO 12
+(~=) :: Float -> Float -> Bool
+(~=) x y = absoluto <= 0.0001
+    where absoluto = abs (x - y)
+
+-- EJERCICIO 13
+until' :: (a -> Bool) -> (a -> a) -> a -> a
+until' p f x = if p x then x else until' p f (f x)
+
+-- EJERCICIO 14
+data Direccion = Sur | Norte | Este | Oeste | Ninguna
+    deriving(Enum, Show)
+
+mueve :: Direccion -> (Integer, Integer) -> (Integer, Integer)
+mueve Sur (x,y) = (x,y-1)
+mueve Norte (x,y) = (x,y+1)
+mueve Este (x,y) = (x+1,y)
+mueve Oeste (x,y) =(x-1,y)
+
+-- EJERCICIO 15
+movimiento :: (Integer, Integer) -> (Integer, Integer) -> (Direccion, Direccion)
+movimiento (x1,y1) (x2,y2) = (if x1==x2 then Ninguna else if x1 < x2 then Norte else Sur, if y1==y2 then Ninguna else if y1 < y2 then Este else Oeste)
+
+-- EJERCICIO 16
+cuadrado :: Num a => a -> a
+cuadrado x = x * x
+
+-- EJERCICIO 17
+data Dia = Lun | Mar | Mier | Juev | Vier | Sab | Dom
+	deriving (Enum,Show)
+
+instance Eq Dia where
+    d1 == d2 = fromEnum d1 == fromEnum d2
+
+instance Ord Dia where
+    d1 <= d2 = fromEnum d1 <= fromEnum d2
+
+laborable, festivo :: Dia -> Bool
+laborable d = d >= Lun && d <= Vier
+festivo d = d == Sab || d == Dom
+
+laborable', festivo' :: Dia -> Bool
+laborable' d = d <= Vier
+festivo' d = not (laborable' d)
+
+diaDespues :: Dia -> Dia
+diaDespues d = toEnum(mod (fromEnum d + 1) 7)
+
+-- EJERCICIO 18
+data Forma = Circulo Float
+    | Rectangulo Float Float
+
+area :: Forma -> Float
+area (Circulo radio) = pi * radio * radio
+area (Rectangulo base altura) = base * altura
+
+instance Eq Forma where
+    f1 == f2 = area f1 == area f2
+    f1 /= f2 = not(f1 == f2)
+    
+
+-- EJERCICIO 19
+data Circulo' = Cir Float
+data Rectangulo' = Rec Float Float
+
+type Forma1 = Either Circulo' Rectangulo'
+
+area' :: Forma1 -> Float
+area' (Right (Rec alto ancho)) = ancho * alto
+area' (Left (Cir radio)) = radio * radio * pi
+
+areaCirculo :: Circulo' -> Float
+areaCirculo (Cir radio) = radio * radio * pi
+
+areaRectangulo :: Rectangulo' -> Float
+areaRectangulo (Rec alto ancho) = alto * ancho
+
+area'' :: Forma1 -> Float
+area'' = either areaCirculo areaRectangulo
 
 
