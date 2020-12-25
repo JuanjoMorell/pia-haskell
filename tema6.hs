@@ -139,24 +139,49 @@ foldl f e (x:xs) = foldl f (f e x) xs
 -----------------------------------------------------
 
 -- EJERCICIO 1
--- posiciones :: (Eq a) => a -> [a] -> [Integer]
-
+posiciones :: (Eq a) => a -> [a] -> [Integer]
+posiciones x = map fst.(filter((==x).snd)).(zip [0..])
 
 -- EJERCICIO 2
+posicion :: (Eq a) => a -> [a] -> Integer
+posicion x = head.(++[-1]).posiciones x
 
 -- EJERCICIO 3
+igualLista :: (Eq a) => [a] -> [a] -> Bool
+igualLista [] [] = True
+igualLista [] ys = False
+igualLista xs [] = False
+igualLista (x:xs) (y:ys) = x == y && igualLista xs ys
 
 -- EJERCICIO 4
+divisible :: Integer -> Integer -> Bool
+divisible x y = x `rem` y == 0
+
+divisores :: Integer -> [Integer]
+divisores x = filter (divisible x) [1..x]
 
 -- EJERCICIO 5
+primo :: Integer -> Bool
+primo x = length(divisores x) == 2
 
 -- EJERCICIO 6
+primos :: Integer -> [Integer]
+primos x = filter primo [1..x]
 
 -- EJERCICIO 7
+data Dia = Domingo|Lunes|Martes|Miercoles|Jueves|Viernes|Sabado
+	deriving (Show,Enum)
+
 
 -- EJERCICIO 8
+pitagoras :: (Int, Int, Int) -> Bool
+pitagoras (x,y,z) = (x*x + y*y) == z*z
 
 -- EJERCICIO 9
+fib :: Integer -> Integer
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
 
 -- EJERCICIO 10
 
