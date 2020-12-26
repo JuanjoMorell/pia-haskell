@@ -136,6 +136,36 @@ foldl     :: (b -> a -> b) -> b -> [a] -> b
 foldl f e [] = e
 foldl f e (x:xs) = foldl f (f e x) xs
 
+inits :: [a] -> [[a]]
+inits [] = [[]]
+inits (x:xs) = [] : map (x:) (inits xs)
+
+inits_ = foldr f [[]] where f x xxs = [] : map (x:) xxs 
+
+scanl     :: (b -> a -> b) -> b -> [a] -> [b]
+scanl f e = map (foldl f e) . inits
+
+scanl_     :: (b -> a -> b) -> b -> [a] -> [b]
+scanl_ f e [] = [e]
+scanl_ f e (x:xs) = e : scanl_ f (f e x) xs
+
+tails [] = [[]]
+tails (x:xs) = (x:xs) : tails xs
+
+scanr f e = map (foldr f e) . tails
+
+scanr_ f e [] = [e]
+scanr_ f e (x:xs) = f x (head ys):ys
+         where ys = scanr f e xs
+
+-- funcion Words -> divide string por palabras
+-- funcion lines -> divide string por lineas \n
+
+-- Funcion quicksort con listas intensionales
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) = quicksort [y | y<-xs,y<=x] ++ [x] ++ quicksort [y | y<-xs,y>x] 
+
 -----------------------------------------------------
 
 -- EJERCICIO 1
