@@ -4,6 +4,9 @@
 --Para evitar que aparezcan los warnings debidos a tabuladores
 {-# OPTIONS_GHC -fno-warn-tabs #-}
 
+module Practica6 where 
+
+
 data ArbolB a = Hoja
     | Rama (ArbolB a) a (ArbolB a)
     deriving Show

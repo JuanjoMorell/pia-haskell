@@ -8,6 +8,8 @@ module Rosadelfa where
 
 data RAdelfa a = Nodo a [RAdelfa a]
 
+instance (Show a)=> Show (RAdelfa a) where
+	show (Nodo d xs) = shown 0 (Nodo d xs)
 
 espacios :: Int -> String
 espacios 0 = ""
