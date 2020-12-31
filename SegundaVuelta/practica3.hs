@@ -78,3 +78,4 @@ instance Num Racional2 where
         Succ n - Succ m = n - m
         n * Cero = Cero
         n * Succ m = n * m + n
+        
