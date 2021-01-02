@@ -50,3 +50,4 @@ bisiesto a = divisible a 4 && (not(divisible a 100) || divisible a 400)
 meses a = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 	where feb | bisiesto a = 29
 		     | otherwise = 28
+
