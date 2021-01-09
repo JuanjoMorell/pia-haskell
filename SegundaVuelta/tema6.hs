@@ -51,3 +51,6 @@ meses a = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 	where feb | bisiesto a = 29
 		     | otherwise = 28
 
+-- EJERCICIO 10
+hamming :: [Int]
+hamming = [x | x <- [1,2..], ]

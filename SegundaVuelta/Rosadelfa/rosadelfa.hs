@@ -12,6 +12,8 @@ data RAdelfa a = Nodo a [RAdelfa a]
 instance (Show a)=> Show (RAdelfa a) where
 	show (Nodo d xs) = shown 0 (Nodo d xs)
 
+midelfa = Nodo 1 [Nodo 2 [Nodo 3 []], Nodo 4 []]
+
 espacios :: Int -> String
 espacios 0 = ""
 espacios n = " " ++ espacios (n-1)
