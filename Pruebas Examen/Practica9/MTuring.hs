@@ -38,6 +38,13 @@ espacios 0 = " "
 espacios n = " " ++ espacios (n-1)
 
 instance Show Configuracion where
-    show (C estado simbolo "" cinta2) = [simbolo] ++ cinta2 ++ ['\n'] ++  "^" ++ ['\n'] ++ show estado
-        
-        --show cinta1 ++ show simbolo ++ show cinta2 ++ "/n" ++ espacios cinta1 ++ "^" ++ "/n" ++ show estado
+    show (C estado simbolo "" cinta2) = [simbolo] ++ cinta2 ++ "\n" ++  "^" ++ "\n" ++ show estado
+    show (C estado simbolo cinta1 cinta2) = cinta1 ++ [simbolo] ++ cinta2 ++ "\n" ++ espacios(length cinta1) ++ "^" ++ "\n" ++ show estado
+
+-- EJERCICIO 4
+actualizaCinta :: Accion -> (Cinta,Simbolo,Cinta) -> (Cinta,Simbolo,Cinta)
+actualizaCinta ac (c1,s,c2)
+                | ac == L = (c1,s,c2)
+                | ac == R = (c1,s,c2)
+                | ac == SSK = (c1,s,c2)
+                | otherwise = (c1,s,c2)
