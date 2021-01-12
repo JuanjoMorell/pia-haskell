@@ -134,20 +134,22 @@ leerTuits st = [T (leeFecha f) i m | (f,i,m)<- zip3 listaF listaI listaM ]
                              listaI = filter esIdentidad todo
                              listaM = todo \\ (listaI++listaF)
 
-operaciones = do putStrLn "Seleccione operacion: "
-                 putStrLn "(1) Imprimir todos los tuits"
-                 putStrLn "(2) Imprimir todos los hashtags"
-                 putStrLn "(3) Imprimir numero de apariciones de cada hashtag"
-                 putStrLn "(9) Salir"
-                 op <- getLine
-                 case op of
-                    "1" -> do putStrLn "TODOS LOS TUITS"
-                              operaciones
-                    "2" -> do putStrLn "TODOS LOS HASHTAG"
-                              operaciones
-                    "3" -> do putStrLn "APARICIONES DE CADA HASHTAG"
-                              operaciones
-                    "9" -> return()
+operaciones :: Tuits -> IO()
+operaciones ts = do putStrLn "Seleccione operacion: "
+                    putStrLn "(1) Imprimir todos los tuits"
+                    putStrLn "(2) Imprimir todos los hashtags"
+                    putStrLn "(3) Imprimir numero de apariciones de cada hashtag"
+                    putStrLn "(9) Salir"
+                    op <- getLine
+                    case op of
+                       "1" -> do putStrLn "TODOS LOS TUITS"
+                                 operaciones ts
+                       "2" -> do putStrLn "TODOS LOS HASHTAG"
+                                 operaciones ts
+                       "3" -> do putStrLn "APARICIONES DE CADA HASHTAG"
+                                 putStrLn (masActivo ts)
+                                 operaciones ts
+                       "9" -> return()
 
 
 main = do putStr "Introduzca fichero de entrada: "
@@ -155,6 +157,6 @@ main = do putStr "Introduzca fichero de entrada: "
           contenido <- readFile fEntrada
           let tuits = leerTuits contenido
           putStrLn "Fichero leido"
-          operaciones
+          operaciones tuits
           
                 

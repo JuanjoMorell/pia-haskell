@@ -31,15 +31,15 @@ data MT = MT (Alfabeto, Cuadruplas)
 data Configuracion = C Estado Simbolo Cinta Cinta
 
 miConfig :: Configuracion
-miConfig = C 1 'a' "" "bcd"
+miConfig = C 1 'o' "cul" "bcd"
 
 espacios :: Int -> String
 espacios 0 = " "
 espacios n = " " ++ espacios (n-1)
 
 instance Show Configuracion where
-    show (C estado simbolo "" cinta2) = [simbolo] ++ cinta2 ++ "\n" ++  "^" ++ "\n" ++ show estado
-    show (C estado simbolo cinta1 cinta2) = cinta1 ++ [simbolo] ++ cinta2 ++ "\n" ++ espacios(length cinta1) ++ "^" ++ "\n" ++ show estado
+    show (C estado simbolo "" cinta2) = [simbolo] ++ cinta2 ++ "\n" ++ ['^'] ++ "\n" ++ show estado
+    show (C estado simbolo cinta1 cinta2) = cinta1 ++ [simbolo] ++ cinta2 ++ "\n" ++ espacios(length cinta1) ++ "^" ++ "\n" ++espacios(length cinta1)++ show estado
 
 -- EJERCICIO 4
 actualizaCinta :: Accion -> (Cinta,Simbolo,Cinta) -> (Cinta,Simbolo,Cinta)
@@ -48,3 +48,5 @@ actualizaCinta ac (c1,s,c2)
                 | ac == R = (c1,s,c2)
                 | ac == SSK = (c1,s,c2)
                 | otherwise = (c1,s,c2)
+
+main = do putStrLn (show miConfig)
